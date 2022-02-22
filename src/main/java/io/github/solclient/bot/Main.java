@@ -21,9 +21,7 @@ public class Main {
 
 		Logger.info("Starting up...");
 
-		JDA jda = JDABuilder.createLight(args[0]).build();
-
-		jda.addEventListener(new PingTest());
+		JDABuilder.createLight(args[0]).addEventListeners(new PingTest()).build();
 	}
 
 }
