@@ -7,8 +7,12 @@ import javax.security.auth.login.LoginException;
 
 import org.tinylog.Logger;
 
+import io.github.solclient.bot.listeners.ScamListener;
+import io.github.solclient.bot.listeners.SuggestionListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Main {
@@ -21,7 +25,13 @@ public class Main {
 
 		Logger.info("Starting up...");
 
-		JDABuilder.createLight(args[0]).addEventListeners(new PingTest()).build();
+		JDA jda = JDABuilder.createLight(args[0]).build();
+
+		jda.getPresence().setStatus(OnlineStatus.IDLE);
+		jda.getPresence().setActivity(Activity.listening("Rick Astley"));
+
+		jda.addEventListener(new SuggestionListener());
+		jda.addEventListener(new ScamListener());
 	}
 
 }
