@@ -28,7 +28,7 @@ public class Main {
 		JDA jda = JDABuilder.createLight(args[0]).build();
 
 		jda.getPresence().setStatus(OnlineStatus.IDLE);
-		jda.getPresence().setActivity(Activity.listening("Rick Astley"));
+		jda.getPresence().setActivity(Activity.watching("the telly"));
 
 		jda.addEventListener(new SuggestionListener());
 		jda.addEventListener(new ScamListener());
