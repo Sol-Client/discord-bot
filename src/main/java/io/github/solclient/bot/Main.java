@@ -7,6 +7,7 @@ import javax.security.auth.login.LoginException;
 
 import org.tinylog.Logger;
 
+import io.github.solclient.bot.listeners.GitHubSpamListener;
 import io.github.solclient.bot.listeners.ScamListener;
 import io.github.solclient.bot.listeners.SuggestionListener;
 import net.dv8tion.jda.api.JDA;
@@ -32,6 +33,7 @@ public class Main {
 
 		jda.addEventListener(new SuggestionListener());
 		jda.addEventListener(new ScamListener());
+		jda.addEventListener(new GitHubSpamListener());
 	}
 
 }

@@ -14,13 +14,11 @@ public class ScamListener extends ListenerAdapter {
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		super.onMessageReceived(event);
 		scanMessage(event.getMessage());
 	}
 
 	@Override
 	public void onMessageUpdate(MessageUpdateEvent event) {
-		super.onMessageUpdate(event);
 		scanMessage(event.getMessage());
 	}
 
