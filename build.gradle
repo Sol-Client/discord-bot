@@ -25,5 +25,4 @@ repositories {
 
 dependencies {
 	implementation "net.dv8tion:JDA:5.0.0-alpha.9"
-	implementation "org.tinylog:tinylog-impl:2.4.1"
 }
