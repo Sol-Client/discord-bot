@@ -7,6 +7,7 @@ import javax.security.auth.login.LoginException;
 import io.github.solclient.bot.listeners.ClearListener;
 import io.github.solclient.bot.listeners.GitHubSpamListener;
 import io.github.solclient.bot.listeners.MorseListener;
+import io.github.solclient.bot.listeners.NickListener;
 import io.github.solclient.bot.listeners.ScamListener;
 import io.github.solclient.bot.listeners.SuggestionListener;
 import net.dv8tion.jda.api.JDA;
@@ -39,6 +40,7 @@ public class Main {
 		jda.addEventListener(new GitHubSpamListener());
 		jda.addEventListener(new MorseListener());
 		jda.addEventListener(new ClearListener());
+		jda.addEventListener(new NickListener());
 
 		Guild solClientDiscord = jda.getGuildById(886561982872977408L);
 
