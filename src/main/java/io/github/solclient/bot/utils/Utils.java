@@ -1,10 +1,13 @@
 package io.github.solclient.bot.utils;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageHistory;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class Utils {
@@ -19,6 +22,15 @@ public class Utils {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Gets the top hoisted role of a member.
+	 * @param member The member.
+	 * @return The role (if any were found).
+	 */
+	public static Optional<Role> getPrimaryRole(Member member) {
+		return member.getRoles().stream().filter(Role::isHoisted).findFirst();
 	}
 
 }

@@ -13,7 +13,9 @@ public class SuggestionListener extends ListenerAdapter {
 			event.getMessage().addReaction("U+2B06").queue();
 			event.getMessage().addReaction("U+2B07").queue();
 
-			event.getMessage().createThreadChannel("Suggestion Discussion (" + event.getAuthor().getName() + ")").queue();;
+			event.getMessage().createThreadChannel("Suggestion Discussion (" + event.getAuthor().getName() + ")").queue((thread) -> {
+				thread.getManager().setArchived(true).queue();
+			});
 		}
 	}
 
