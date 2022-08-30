@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
- * Thanks, EinfxchJakob#8968.
+ * Thanks, kuschelnder#8968.
  * I shouldn't need to do this!
  *
  * Class to stop GitHub users from trying to get recognition.
@@ -15,9 +15,15 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
  */
 public class GitHubSpamListener extends ListenerAdapter {
 
+	private final String channelName;
+
+	public GitHubSpamListener(String channelName) {
+		this.channelName = channelName;
+	}
+
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		if(!"github".equals(event.getChannel().getName())) {
+		if(!channelName.equals(event.getChannel().getName())) {
 			return;
 		}
 
@@ -29,7 +35,7 @@ public class GitHubSpamListener extends ListenerAdapter {
 
 		Utils.getMostRecentMessage(event.getTextChannel(),
 				(message) -> message.getIdLong() != event.getMessageIdLong() && starrer.equals(getStarrer(message)),
-				(message) -> event.getMessage().delete().queue(), 10);
+				(ignored) -> event.getMessage().delete().queue(), 10);
 	}
 
 	private String getStarrer(Message message) {

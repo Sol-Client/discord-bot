@@ -10,7 +10,7 @@ public class MorseListener extends ListenerAdapter {
 
 	// morse codes, according to Wikipedia
 	// the definitive source for any and all information
-	private static List<String> morseCodes = Arrays.asList("•—", "—•••", "—•—•", "—••", "•", "••—•", "——•", "••••", "••",
+	private static final List<String> MORSE_CODES = Arrays.asList("•—", "—•••", "—•—•", "—••", "•", "••—•", "——•", "••••", "••",
 			"•———", "—•—", "•—••", "——", "—•", "———", "•——•", "——•—", "•—•", "•••", "—", "••—", "•••—", "•——", "—••—",
 			"—•——", "——••", "•————", "••———", "•••——", "••••—", "•••••", "—••••", "——•••", "———••", "————•", "—————");
 
@@ -57,7 +57,7 @@ public class MorseListener extends ListenerAdapter {
 				builder.append(" ");
 			}
 
-			builder.append(morseCodes.get(morseIndex));
+			builder.append(MORSE_CODES.get(morseIndex));
 		}
 
 		String result = builder.toString();
@@ -89,8 +89,6 @@ public class MorseListener extends ListenerAdapter {
 			data = data.substring(0, data.length() - 1);
 		}
 
-		System.out.println(data);
-
 		StringBuilder currentMorse = new StringBuilder();
 
 		for(int i = 0; i < data.length(); i++) {
@@ -101,7 +99,7 @@ public class MorseListener extends ListenerAdapter {
 			}
 
 			if(character == '/' || character == ' ' || i == data.length() - 1) {
-				int morseIndex = morseCodes.indexOf(currentMorse.toString());
+				int morseIndex = MORSE_CODES.indexOf(currentMorse.toString());
 
 				if(morseIndex > 25) {
 					int offset = morseIndex - 25;

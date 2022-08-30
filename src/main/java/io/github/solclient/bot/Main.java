@@ -1,13 +1,11 @@
 package io.github.solclient.bot;
 
-import java.util.Arrays;
-
 import javax.security.auth.login.LoginException;
 
 import io.github.solclient.bot.listeners.ClearListener;
 import io.github.solclient.bot.listeners.GitHubSpamListener;
+import io.github.solclient.bot.listeners.JoinLeaveListener;
 import io.github.solclient.bot.listeners.MorseListener;
-import io.github.solclient.bot.listeners.NickListener;
 import io.github.solclient.bot.listeners.ScamListener;
 import io.github.solclient.bot.listeners.SuggestionListener;
 import net.dv8tion.jda.api.JDA;
@@ -17,10 +15,9 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
-import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege.Type;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
 
@@ -30,19 +27,20 @@ public class Main {
 			System.exit(1);
 		}
 
-		JDA jda = JDABuilder.createLight(args[0]).build().awaitReady();
+		JDA jda = JDABuilder.createDefault(args[0])
+				.enableIntents(GatewayIntent.GUILD_MEMBERS).build().awaitReady();
 
 		jda.getPresence().setStatus(OnlineStatus.IDLE);
-		jda.getPresence().setActivity(Activity.watching("the telly"));
-
-		jda.addEventListener(new SuggestionListener());
-		jda.addEventListener(new ScamListener());
-		jda.addEventListener(new GitHubSpamListener());
-		jda.addEventListener(new MorseListener());
-		jda.addEventListener(new ClearListener());
-		jda.addEventListener(new NickListener());
+		jda.getPresence().setActivity(Activity.listening("jazz"));
 
 		Guild solClientDiscord = jda.getGuildById(886561982872977408L);
+
+		jda.addEventListener(new SuggestionListener("suggestions"));
+		jda.addEventListener(new ScamListener());
+		jda.addEventListener(new GitHubSpamListener("github"));
+		jda.addEventListener(new MorseListener());
+		jda.addEventListener(new ClearListener());
+		jda.addEventListener(new JoinLeaveListener(solClientDiscord.getTextChannelById(945981496399917056L)));
 
 		solClientDiscord.updateCommands()
 				.addCommands(
@@ -54,10 +52,9 @@ public class Main {
 								"n", "The number of messages to clear.", true).setDefaultEnabled(false))
 				.queue((commands) -> {
 					for(Command command : commands) {
-						if("clear".equals(command.getName())) {
-							command.updatePrivileges(solClientDiscord, CommandPrivilege.enableRole(886562656562085909L))
-									.queue();
-						}
+						// default to admin only
+						command.updatePrivileges(solClientDiscord, CommandPrivilege.enableRole(1003346204052181083L))
+								.queue();
 					}
 				});
 	}
