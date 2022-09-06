@@ -3,6 +3,7 @@ package io.github.solclient.bot;
 import javax.security.auth.login.LoginException;
 
 import io.github.solclient.bot.listeners.ClearListener;
+import io.github.solclient.bot.listeners.FaqListener;
 import io.github.solclient.bot.listeners.GitHubSpamListener;
 import io.github.solclient.bot.listeners.JoinLeaveListener;
 import io.github.solclient.bot.listeners.MorseListener;
@@ -13,10 +14,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
@@ -41,6 +40,7 @@ public class Main {
 		jda.addEventListener(new MorseListener());
 		jda.addEventListener(new ClearListener());
 		jda.addEventListener(new JoinLeaveListener(solClientDiscord.getTextChannelById(945981496399917056L)));
+		jda.addEventListener(new FaqListener());
 
 		solClientDiscord.updateCommands()
 				.addCommands(
@@ -49,14 +49,9 @@ public class Main {
 						Commands.slash("mtoa", "Convert morse to text.").addOption(OptionType.STRING, "data",
 								"The text.", true),
 						Commands.slash("clear", "Clear n messages").addOption(OptionType.INTEGER,
-								"n", "The number of messages to clear.", true).setDefaultEnabled(false))
-				.queue((commands) -> {
-					for(Command command : commands) {
-						// default to admin only
-						command.updatePrivileges(solClientDiscord, CommandPrivilege.enableRole(1003346204052181083L))
-								.queue();
-					}
-				});
+								"n", "The number of messages to clear.", true).setDefaultEnabled(false),
+						Commands.slash("faq", "Display FAQ message"))
+				.queue();
 	}
 
 }
