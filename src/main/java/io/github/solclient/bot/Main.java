@@ -3,6 +3,7 @@ package io.github.solclient.bot;
 import javax.security.auth.login.LoginException;
 
 import io.github.solclient.bot.listeners.ClearListener;
+import io.github.solclient.bot.listeners.ComplimentListener;
 import io.github.solclient.bot.listeners.FaqListener;
 import io.github.solclient.bot.listeners.GitHubSpamListener;
 import io.github.solclient.bot.listeners.JoinLeaveListener;
@@ -38,6 +39,7 @@ public class Main {
 		jda.addEventListener(new ClearListener());
 		jda.addEventListener(new JoinLeaveListener(solClientDiscord.getTextChannelById(945981496399917056L)));
 		jda.addEventListener(new FaqListener());
+		jda.addEventListener(new ComplimentListener());
 
 		solClientDiscord.updateCommands()
 				.addCommands(
@@ -48,7 +50,8 @@ public class Main {
 						Commands.slash("clear", "Clear n messages")
 								.addOption(OptionType.INTEGER, "n", "The number of messages to clear.", true)
 								.setDefaultEnabled(false),
-						Commands.slash("faq", "Display FAQ message"))
+						Commands.slash("faq", "Display FAQ message"),
+						Commands.slash("compliment", "Receive a compliment."))
 				.queue();
 	}
 
