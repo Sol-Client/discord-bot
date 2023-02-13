@@ -10,16 +10,16 @@ public class MorseListener extends ListenerAdapter {
 
 	// morse codes, according to Wikipedia
 	// the definitive source for any and all information
-	private static final List<String> MORSE_CODES = Arrays.asList("•—", "—•••", "—•—•", "—••", "•", "••—•", "——•", "••••", "••",
-			"•———", "—•—", "•—••", "——", "—•", "———", "•——•", "——•—", "•—•", "•••", "—", "••—", "•••—", "•——", "—••—",
-			"—•——", "——••", "•————", "••———", "•••——", "••••—", "•••••", "—••••", "——•••", "———••", "————•", "—————");
+	private static final List<String> MORSE_CODES = Arrays.asList("•—", "—•••", "—•—•", "—••", "•", "••—•", "——•",
+			"••••", "••", "•———", "—•—", "•—••", "——", "—•", "———", "•——•", "——•—", "•—•", "•••", "—", "••—", "•••—",
+			"•——", "—••—", "—•——", "——••", "•————", "••———", "•••——", "••••—", "•••••", "—••••", "——•••", "———••",
+			"————•", "—————");
 
 	@Override
 	public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-		if(event.getName().equals("atom")) {
+		if (event.getName().equals("atom")) {
 			event.reply(atom(event.getOption("data").getAsString())).queue();
-		}
-		else if(event.getName().equals("mtoa")) {
+		} else if (event.getName().equals("mtoa")) {
 			event.reply(mtoa(event.getOption("data").getAsString())).queue();
 		}
 	}
@@ -27,33 +27,31 @@ public class MorseListener extends ListenerAdapter {
 	private static String atom(String data) {
 		StringBuilder builder = new StringBuilder();
 
-		for(int i = 0; i < data.length(); i++) {
+		for (int i = 0; i < data.length(); i++) {
 			char character = data.charAt(i);
 
 			int morseIndex;
 
-			if(character >= 'A' && character <= 'Z') {
+			if (character >= 'A' && character <= 'Z') {
 				morseIndex = character - 65;
-			}
-			else if(character >= 'a' && character <= 'z') {
+			} else if (character >= 'a' && character <= 'z') {
 				morseIndex = character - 97;
-			}
-			else if(character >= '0' && character <= '9') {
+			} else if (character >= '0' && character <= '9') {
 				morseIndex = character - 23;
 
-				if(character == '0') {
+				if (character == '0') {
 					morseIndex += 10;
 				}
 			}
 
 			else {
-				if(character == ' ' && i != data.length() - 1) {
+				if (character == ' ' && i != data.length() - 1) {
 					builder.append(" /");
 				}
 				continue;
 			}
 
-			if(i != 0) {
+			if (i != 0) {
 				builder.append(" ");
 			}
 
@@ -62,7 +60,7 @@ public class MorseListener extends ListenerAdapter {
 
 		String result = builder.toString();
 
-		if(result.isEmpty()) {
+		if (result.isEmpty()) {
 			return "Could not find any alphanumeric characters";
 		}
 
@@ -81,46 +79,43 @@ public class MorseListener extends ListenerAdapter {
 		data = data.replace("-", "—");
 		data = data.replace("_", "—");
 
-		while(data.startsWith(" ")) {
+		while (data.startsWith(" ")) {
 			data = data.substring(1);
 		}
 
-		while(data.endsWith(" ")) {
+		while (data.endsWith(" ")) {
 			data = data.substring(0, data.length() - 1);
 		}
 
 		StringBuilder currentMorse = new StringBuilder();
 
-		for(int i = 0; i < data.length(); i++) {
+		for (int i = 0; i < data.length(); i++) {
 			char character = data.charAt(i);
 
-			if(character == '•' || character == '—') {
+			if (character == '•' || character == '—') {
 				currentMorse.append(character);
 			}
 
-			if(character == '/' || character == ' ' || i == data.length() - 1) {
+			if (character == '/' || character == ' ' || i == data.length() - 1) {
 				int morseIndex = MORSE_CODES.indexOf(currentMorse.toString());
 
-				if(morseIndex > 25) {
+				if (morseIndex > 25) {
 					int offset = morseIndex - 25;
 
-					if(offset == 0) {
+					if (offset == 0) {
 						offset = 9;
-					}
-					else if(offset == 10) {
+					} else if (offset == 10) {
 						offset = 0;
 					}
 
 					builder.append((char) (48 + offset));
-				}
-				else if(morseIndex < 0) {
+				} else if (morseIndex < 0) {
 					continue;
-				}
-				else {
+				} else {
 					builder.append((char) (65 + morseIndex));
 				}
 
-				if(character == '/') {
+				if (character == '/') {
 					builder.append(" ");
 				}
 
@@ -130,7 +125,7 @@ public class MorseListener extends ListenerAdapter {
 
 		String result = builder.toString();
 
-		if(result.isEmpty()) {
+		if (result.isEmpty()) {
 			return "Could not find any valid morse codes";
 		}
 

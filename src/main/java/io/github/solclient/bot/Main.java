@@ -7,7 +7,6 @@ import io.github.solclient.bot.listeners.FaqListener;
 import io.github.solclient.bot.listeners.GitHubSpamListener;
 import io.github.solclient.bot.listeners.JoinLeaveListener;
 import io.github.solclient.bot.listeners.MorseListener;
-import io.github.solclient.bot.listeners.ScamListener;
 import io.github.solclient.bot.listeners.SuggestionListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -21,13 +20,12 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 public class Main {
 
 	public static void main(String[] args) throws LoginException, InterruptedException {
-		if(args.length != 1) {
+		if (args.length != 1) {
 			System.err.println("usage: sol-bot <token>");
 			System.exit(1);
 		}
 
-		JDA jda = JDABuilder.createDefault(args[0])
-				.enableIntents(GatewayIntent.GUILD_MEMBERS).build().awaitReady();
+		JDA jda = JDABuilder.createDefault(args[0]).enableIntents(GatewayIntent.GUILD_MEMBERS).build().awaitReady();
 
 		jda.getPresence().setStatus(OnlineStatus.IDLE);
 		jda.getPresence().setActivity(Activity.listening("jazz"));
@@ -35,7 +33,6 @@ public class Main {
 		Guild solClientDiscord = jda.getGuildById(886561982872977408L);
 
 		jda.addEventListener(new SuggestionListener("suggestions"));
-		jda.addEventListener(new ScamListener());
 		jda.addEventListener(new GitHubSpamListener("github"));
 		jda.addEventListener(new MorseListener());
 		jda.addEventListener(new ClearListener());
@@ -48,8 +45,9 @@ public class Main {
 								"The text.", true),
 						Commands.slash("mtoa", "Convert morse to text.").addOption(OptionType.STRING, "data",
 								"The text.", true),
-						Commands.slash("clear", "Clear n messages").addOption(OptionType.INTEGER,
-								"n", "The number of messages to clear.", true).setDefaultEnabled(false),
+						Commands.slash("clear", "Clear n messages")
+								.addOption(OptionType.INTEGER, "n", "The number of messages to clear.", true)
+								.setDefaultEnabled(false),
 						Commands.slash("faq", "Display FAQ message"))
 				.queue();
 	}

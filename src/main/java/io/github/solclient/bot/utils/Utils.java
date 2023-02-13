@@ -14,11 +14,12 @@ import net.dv8tion.jda.api.utils.MarkdownSanitizer;
 
 public class Utils {
 
-	public static void getMostRecentMessage(TextChannel channel, Predicate<Message> criteria, Consumer<Message> callback, int limit) {
+	public static void getMostRecentMessage(TextChannel channel, Predicate<Message> criteria,
+			Consumer<Message> callback, int limit) {
 		MessageHistory history = channel.getHistory();
 		history.retrievePast(limit).queue((result) -> {
-			for(Message message : result) {
-				if(criteria.test(message)) {
+			for (Message message : result) {
+				if (criteria.test(message)) {
 					callback.accept(message);
 					return;
 				}
@@ -28,6 +29,7 @@ public class Utils {
 
 	/**
 	 * Gets the top hoisted role of a member.
+	 *
 	 * @param member The member.
 	 * @return The role (if any were found).
 	 */
@@ -42,7 +44,7 @@ public class Utils {
 	public static String addNumberSuffix(int i) {
 		int lastDigit = i % 10;
 
-		switch(lastDigit) {
+		switch (lastDigit) {
 			case 1:
 				return i + "st";
 			case 2:

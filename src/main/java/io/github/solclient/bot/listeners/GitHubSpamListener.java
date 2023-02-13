@@ -7,11 +7,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
- * Thanks, kuschelnder#8968.
- * I shouldn't need to do this!
+ * Thanks, kuschelnder#8968. I shouldn't need to do this!
  *
- * Class to stop GitHub users from trying to get recognition.
- * Or just annoy me.
+ * Class to stop GitHub users from trying to get recognition. Or just annoy me.
  */
 public class GitHubSpamListener extends ListenerAdapter {
 
@@ -23,13 +21,13 @@ public class GitHubSpamListener extends ListenerAdapter {
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		if(!channelName.equals(event.getChannel().getName())) {
+		if (!channelName.equals(event.getChannel().getName())) {
 			return;
 		}
 
 		String starrer = getStarrer(event.getMessage());
 
-		if(starrer == null) {
+		if (starrer == null) {
 			return;
 		}
 
@@ -39,13 +37,13 @@ public class GitHubSpamListener extends ListenerAdapter {
 	}
 
 	private String getStarrer(Message message) {
-		if(message.getEmbeds().size() != 1) {
+		if (message.getEmbeds().size() != 1) {
 			return null;
 		}
 
 		MessageEmbed embed = message.getEmbeds().get(0);
 
-		if(!embed.getTitle().matches("\\[.*\\/.*\\] New star added")) {
+		if (!embed.getTitle().matches("\\[.*\\/.*\\] New star added")) {
 			return null;
 		}
 

@@ -33,31 +33,27 @@ public class JoinLeaveListener extends ListenerAdapter {
 
 	private MessageEmbed buildEmbed(User user, Type type) {
 		return new EmbedBuilder()
-				.setAuthor(user.getName() + '#' + user.getDiscriminator(),
-						"https://discord.com/users/" + user.getId(), user.getAvatarUrl())
-				.setTitle("Member " + type.past)
-				.setDescription(buildDescription(user, type))
-				.setColor(type.colour)
+				.setAuthor(user.getName() + '#' + user.getDiscriminator(), "https://discord.com/users/" + user.getId(),
+						user.getAvatarUrl())
+				.setTitle("Member " + type.past).setDescription(buildDescription(user, type)).setColor(type.colour)
 				.build();
 	}
 
 	private String buildDescription(User user, Type type) {
-		switch(type) {
-			case JOIN:
-				return user.getAsMention() + " - " + Utils.addNumberSuffix(channel.getGuild().getMemberCount())
-						+ " to join.\nCreated " + Utils.formatTime(user.getTimeCreated()) + ".";
-			case LEAVE:
-				return user.getAsMention() + " - The guild now has " + channel.getGuild().getMemberCount()
-						+ " members remaining.";
-			default:
-				throw new IllegalArgumentException(String.valueOf(type));
+		switch (type) {
+		case JOIN:
+			return user.getAsMention() + " - " + Utils.addNumberSuffix(channel.getGuild().getMemberCount())
+					+ " to join.\nCreated " + Utils.formatTime(user.getTimeCreated()) + ".";
+		case LEAVE:
+			return user.getAsMention() + " - The guild now has " + channel.getGuild().getMemberCount()
+					+ " members remaining.";
+		default:
+			throw new IllegalArgumentException(String.valueOf(type));
 		}
 	}
 
-
 	enum Type {
-		JOIN("join", "joined", 0xFF62FF56),
-		LEAVE("leave", "left", 0xFFFF4B4B);
+		JOIN("join", "joined", 0xFF62FF56), LEAVE("leave", "left", 0xFFFF4B4B);
 
 		final String verb;
 		final String past;

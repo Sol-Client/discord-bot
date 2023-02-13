@@ -13,9 +13,8 @@ public class SuggestionListener extends ListenerAdapter {
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		if(!channelName.equals(event.getChannel().getName())) {
+		if (!channelName.equals(event.getChannel().getName()))
 			return;
-		}
 
 		event.getMessage().addReaction("U+2B06").queue();
 		event.getMessage().addReaction("U+2B07").queue();
